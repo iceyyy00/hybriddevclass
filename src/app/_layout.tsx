@@ -1,18 +1,35 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import {
+  PlusJakartaSans_400Regular,
+  PlusJakartaSans_500Medium,
+  PlusJakartaSans_600SemiBold,
+  useFonts,
+} from "@expo-google-fonts/plus-jakarta-sans";
+import { Stack } from "expo-router";
+import * as SplashScrreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import '../../global.css';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+SplashScrreen.preventAutoHideAsync();
 
-SplashScreen.preventAutoHideAsync();
+export default function RootLayout() {
+  const [loaded,error] = useFonts({
+    PlusJakartaSans_400Regular,
+    PlusJakartaSans_500Medium,
+    PlusJakartaSans_600SemiBold,
+  });
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+  useEffect(() => {
+    if (loaded || error) {
+      SplashScrreen.hideAsync();
+    }
+  },[loaded,error]);
+
+  if (!loaded && !error) return null;
+  return(
+    <>
+      <StatusBar style="dark" />
+      <Stack screenOptions={{headerShown:false, contentStyle:{backgroundColor: '#F7F6F2'}}} />
+    </>
   );
 }
