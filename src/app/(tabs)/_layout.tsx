@@ -1,6 +1,5 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@react-native-vector-icons/ionicons";
 import { Tabs } from "expo-router";
-import { View } from "react-native";
 
 export default function TabsLayout() {
   return (
@@ -8,17 +7,13 @@ export default function TabsLayout() {
       screenOptions={{
         headerStyle: { backgroundColor: "#F7F6F2" },
         headerShadowVisible: false,
-        headerTitleAlign: "left",
+        headerTitle: "Moneo",
+        headerTitleAlign: "center",
         headerTitleStyle: {
           fontFamily: "PlusJakartaSans_600SemiBold",
           fontSize: 18,
           color: "#1C1B1B",
         },
-        headerRight: () => (
-          <View className="w-8 h-8 mr-6 rounded-full bg-primary items-center justify-center">
-            <Ionicons name="person" size={18} color="#FFFFFF" />
-          </View>
-        ),
         tabBarActiveTintColor: "#4F5D45",
         tabBarInactiveTintColor: "#5E5E5E",
         tabBarStyle: {

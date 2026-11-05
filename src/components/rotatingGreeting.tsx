@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, {
-    Easing,
-    FadeInDown,
-    FadeOutUp,
+  Easing,
+  FadeInDown,
+  FadeOutUp,
 } from "react-native-reanimated";
 
 type Period = "morning" | "afternoon" | "evening" | "night";
@@ -79,14 +79,25 @@ export default function RotatingGreeting() {
       accessibilityRole="button"
       accessibilityLabel="Change greeting language"
     >
-      <View className="h-5 w-full overflow-hidden">
+      <View className="h-8 w-full justify-center overflow-visible">
         <Animated.View
           key={greeting}
-          style={{ position: "absolute", left: 0, top: 0 }}
-          entering={FadeInDown.duration(450).easing(Easing.out(Easing.cubic))}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+          }}
+          entering={FadeInDown.duration(450).easing(
+            Easing.out(Easing.cubic)
+          )}
           exiting={FadeOutUp.duration(300)}
         >
-          <Text className="font-jakarta text-body-sm text-secondary">
+          <Text
+            className="font-jakarta text-body-sm text-secondary"
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.85}
+          >
             {greeting}
           </Text>
         </Animated.View>

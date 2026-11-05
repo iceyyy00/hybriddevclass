@@ -1,12 +1,12 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@react-native-vector-icons/ionicons";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import RotatingGreeting from "../../components/rotatingGreeting";
 
-type IconName = keyof typeof Ionicons.glyphMap;
+type IconName = React.ComponentProps<typeof Ionicons>["name"];
 
 const USER_NAME = "John Doe";
 const INCOME = 12000000;
-const EXPENSES = 8000000;
+const EXPENSES = 800000;
 const BUDGET = 4000000;
 
 const MONTHS = [
@@ -57,6 +57,7 @@ export default function Home() {
     const balance = INCOME - EXPENSES;
     const remaining = BUDGET - EXPENSES;
     const percentUsed = Math.round((EXPENSES / BUDGET) * 100);
+    const progressWidth = Math.min(percentUsed, 100);
     const monthName = MONTHS[new Date().getMonth()];
 
     return (
@@ -65,7 +66,7 @@ export default function Home() {
             contentContainerClassName="px-margin pt-2 pb-6 gap-7" 
         >
             <View className="flex-row items-center justify-between">
-                <View>
+                <View className="flex-1">
                     <RotatingGreeting />
                     <Text className="font-jakarta-semibold text-headline-sm text-on-surface">
                         {USER_NAME}
@@ -96,7 +97,7 @@ export default function Home() {
                         <Text className="font-jakarta-medium text-label-sm text-secondary">
                             Income
                         </Text>
-                        <Text className="mt-0.5font-jakarta-medium text-body-lg text-on-surface">
+                        <Text className="mt-0.5 font-jakarta-medium text-body-lg text-on-surface">
                             {formatRupiah(INCOME)}
                         </Text>
                     </View>
@@ -104,7 +105,7 @@ export default function Home() {
                         <Text className="font-jakarta-medium text-label-sm text-secondary">
                             Expenses
                         </Text>
-                        <Text className="mt-0.5font-jakarta-medium text-body-lg text-on-surface">
+                        <Text className="mt-0.5 font-jakarta-medium text-body-lg text-on-surface">
                             {formatRupiah(EXPENSES)}
                         </Text>
                     </View>
@@ -122,20 +123,25 @@ export default function Home() {
             </Pressable>
 
             <View className="p-4 bg-surface rounded-xl gap-3" style={softShadow}>
-                <View className="flex-row items-center justify-between">
-                    <Text className="font-jakarta-semibold text-body-md text-on-surface">
+                <View className="flex-row items-start justify-between gap-2">
+                    <Text className="flex-1 font-jakarta-semibold text-body-md text-on-surface">
                         {monthName} spending
                     </Text>
-                    <Text className="font-jakarta text-body-sm text-secondary">
-                        {formatRupiah(EXPENSES)} <Text className="text-placeholder">/</Text>{" "}
-                        {formatRupiah(BUDGET)}
+
+                    <Text
+                        className="flex-1 font-jakarta text-body-sm text-secondary text-right"
+                        numberOfLines={1}
+                        adjustsFontSizeToFit
+                        minimumFontScale={0.75}
+                    >
+                        {formatRupiah(EXPENSES)} / {formatRupiah(BUDGET)}
                     </Text>
                 </View>
 
                 <View className="w-full h-2 rounded-full bg-surface-container overflow-hidden">
                     <View
                         className="h-full rounded-full bg-primary-container"
-                        style={{ width: `${percentUsed}%` }}
+                        style={{ width: `${progressWidth}%` }}
                     />
                 </View>
 
