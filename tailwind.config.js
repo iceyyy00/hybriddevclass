@@ -19,6 +19,12 @@ module.exports = {
         placeholder: "#A3A3A3",
         "surface-container-low": "#F6F3F2",
         "surface-container-highest": "#E5E2E1",
+        "surface-container-high": "#EAE7E7",
+        "on-surface-variant": "#444840",
+        "error-container": "#FFDAD6",
+        "on-error": "#FFFFFF",
+        "inverse-surface": "#313030",
+
       },
       spacing: { margin: "24px" },
       fontFamily: {
