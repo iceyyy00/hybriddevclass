@@ -35,33 +35,7 @@ export default function TabsLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="transactions"
-        options={{
-          title: "Transactions",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="receipt-outline" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="statistics"
-        options={{
-          title: "Statistics",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="bar-chart-outline" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profile",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-outline" size={size} color={color} />
-          ),
-        }}
-      />
+      
     </Tabs>
   );
 }
