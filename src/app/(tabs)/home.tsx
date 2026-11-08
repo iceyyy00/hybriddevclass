@@ -1,8 +1,10 @@
+import RotatingGreeting from "@/components/RotatingGreeting";
 import { Ionicons } from "@react-native-vector-icons/ionicons";
+import { useRouter, type Href } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import RotatingGreeting from "../../components/rotatingGreeting";
+import { TRANSACTIONS } from "../../data/transactions";
+import { formatRupiah } from "../../utils/format";
 
-type IconName = React.ComponentProps<typeof Ionicons>["name"];
 
 const USER_NAME = "John Doe";
 const INCOME = 12000000;
@@ -14,27 +16,12 @@ const MONTHS = [
     "July","August","September","October","November","December"
 ];
 
-const TRANSACTIONS: {
-    id: string;
-    icon: IconName;
-    title: string;
-    note: string;
-    amount: number;
-    
-}[] = [
-    { id: "1", icon: "restaurant-outline", title: "Food", note: "Lunch • Today", amount: 45000 },
-    { id: "2", icon: "car-outline", title: "Transport", note: "Grab • Today", amount: 28000 },
-    { id: "3", icon: "bag-outline", title: "Shopping", note: "Shoes • Yesterday", amount: 350000 },
-]
-
 const CATEGORIES = [
     { id: "food", name: "Food", amount: 1250000, percent: 65, color: "#4F5D45" },
     { id: "shopping", name: "Shopping", amount: 900000, percent: 45, color: "#8E9B85" },
     { id: "transport", name: "Transport", amount: 650000, percent: 32, color: "#B2BDB0" },
 ]
 
-const formatRupiah = (n: number) => 
-    "Rp " + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
 const softShadow = {
     shadowColor: "#171717",
@@ -54,6 +41,8 @@ const buttonShadow = {
 
 export default function Home() {
 
+    const router = useRouter();
+
     const balance = INCOME - EXPENSES;
     const remaining = BUDGET - EXPENSES;
     const percentUsed = Math.round((EXPENSES / BUDGET) * 100);
@@ -67,7 +56,7 @@ export default function Home() {
         >
             <View className="flex-row items-center justify-between">
                 <View className="flex-1">
-                    <RotatingGreeting />
+                    <RotatingGreeting/>
                     <Text className="font-jakarta-semibold text-headline-sm text-on-surface">
                         {USER_NAME}
                     </Text>
@@ -169,27 +158,26 @@ export default function Home() {
 
                 <View className="gap-1">
                     {TRANSACTIONS.map((t) => (
-                    <View
-                    key={t.id}
-                    className="flex-row items-center justify-between py-2.5"
-                    >
-                        <View className="flex-row items-center gap-3.5">
-                            <View className="w-10 h-10 rounded-xl bg-surface items-center justify-center">
-                                <Ionicons name={t.icon} size={20} color="#4F5D45" />
-                            </View>
-                            <View>
-                                <Text className="font-jakarta-medium text-body-md text-on-surface">
-                                    {t.title}
+                        <Pressable key={t.id}
+                            onPress={() => router.push(`/transactions/${t.id}` as Href)}
+                            className="flex-row items-center justify-between py-2.5 active:opacity-70">
+                                <View className="flex-row items-center gap-3.5">
+                                    <View className="w-10 h-10 rounded-xl bg-surface items-center justify-center">
+                                        <Ionicons name={t.icon} size={20} color="#4F5D45" />
+                                    </View>
+                                    <View>
+                                        <Text className="font-jakarta-medium text-body-md text-on-surface">
+                                        {t.category}
+                                        </Text>
+                                        <Text className="font-jakarta text-caption text-secondary">
+                                        {`${t.title} • ${t.when}`}
+                                        </Text>
+                                    </View>
+                                </View>
+                                <Text className="font-jakarta-semibold text-body-md text-on-surface">
+                                    {`- ${formatRupiah(t.amount)}`}
                                 </Text>
-                                <Text className="font-jakarta text-caption text-secondary">
-                                    {t.note}
-                                </Text>
-                            </View>
-                        </View>
-                        <Text className="font-jakarta-semibold text-body-md text-on-surface">
-                            {`- ${formatRupiah(t.amount)}`}
-                        </Text>
-                    </View>
+                        </Pressable>
                     ))}
                 </View>
             </View>
