@@ -51,7 +51,7 @@ export default function App() {
         ? "border-[1.5px] border-primary-container"
         : "border border-border";
 
-  {/* habis hapus if(isLoggedIn karena halaman home sudah jadi) */}
+  
 
   return (
     <SafeAreaView className="flex-1 bg-canvas">
