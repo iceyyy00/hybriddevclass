@@ -1,17 +1,17 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
-    ActivityIndicator,
-    Pressable,
-    ScrollView,
-    Text,
-    View,
+  ActivityIndicator,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DeleteConfirmModal from "../../components/DeleteConfirmModal";
 import DetailRow from "../../components/DetailRow";
-import { TRANSACTIONS } from "../../data/transactions";
+import { useTransactions } from "../../context/TransactionsContext";
 import { formatRupiah } from "../../utils/format";
 
 const softShadow = {
@@ -30,7 +30,11 @@ export default function TransactionDetail() {
   const [deleting, setDeleting] = useState(false);
   const [editing, setEditing] = useState(false);
 
-  const transaction = TRANSACTIONS.find((t) => t.id === id);
+  const { transactions, deleteTransaction } = useTransactions();
+  const found = transactions.find((t) => t.id === id);
+  const lastKnown = useRef(found);
+  if(found) lastKnown.current = found;
+  const transaction = found ?? lastKnown.current;
 
   if (!transaction) {
     return (
@@ -56,6 +60,7 @@ export default function TransactionDetail() {
   const handleConfirmDelete = () => {
     setDeleting(true);
     setTimeout(() => {
+      deleteTransaction(transaction.id);
       setDeleting(false);
       setDeleteVisible(false);
       router.back();

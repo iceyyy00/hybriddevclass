@@ -1,9 +1,11 @@
 import RotatingGreeting from "@/components/RotatingGreeting";
+import { EXPENSE_CATEGORIES } from "@/data/expenseOptions";
 import { Ionicons } from "@react-native-vector-icons/ionicons";
 import { useRouter, type Href } from "expo-router";
+import { useMemo } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { BUDGET, CATEGORIES, EXPENSES, INCOME, USER_NAME } from "../../data/summary";
-import { TRANSACTIONS } from "../../data/transactions";
+import { useTransactions } from "../../context/TransactionsContext";
+import { BUDGET, INCOME, USER_NAME } from "../../data/summary";
 import { formatRupiah } from "../../utils/format";
 
 
@@ -32,10 +34,33 @@ const buttonShadow = {
 export default function Home() {
 
     const router = useRouter();
+    const { transactions } = useTransactions();
 
-    const balance = INCOME - EXPENSES;
-    const remaining = BUDGET - EXPENSES;
-    const percentUsed = Math.round((EXPENSES / BUDGET) * 100);
+    const expenses = useMemo(
+    () => transactions.reduce((sum, t) => sum + t.amount, 0), [transactions]
+    );
+
+    const categories = useMemo(() => {
+        const totals: Record<string, number> = {};
+        transactions.forEach((t) => {
+            totals[t.category] = (totals[t.category] ?? 0) + t.amount;
+        });
+        const max = Math.max(...Object.values(totals),1);
+        return Object.entries(totals).map(([name,amount]) => ({
+            id: name,
+            name,
+            amount,
+            percent: Math.round((amount / max) * 100),
+            color:
+             EXPENSE_CATEGORIES.find((c) => c.name === name)?.color ?? "#B2BDB0",
+        }))
+        .sort((a,b) => b.amount - a.amount);
+    }, [transactions]);
+    
+
+    const balance = INCOME - expenses;
+    const remaining = BUDGET - expenses;
+    const percentUsed = Math.round((expenses / BUDGET) * 100);
     const progressWidth = Math.min(percentUsed, 100);
     const monthName = MONTHS[new Date().getMonth()];
 
@@ -85,13 +110,14 @@ export default function Home() {
                             Expenses
                         </Text>
                         <Text className="mt-0.5 font-jakarta-medium text-body-lg text-on-surface">
-                            {formatRupiah(EXPENSES)}
+                            {formatRupiah(expenses)}
                         </Text>
                     </View>
                 </View>
             </View>
 
             <Pressable
+                onPress={() => router.push("/add-expense" as Href)}
                 className="w-full h-[52px] rounded-xl bg-primary-container flex-row items-center justify-center gap-2 active:opacity-90 active:scale-[0.99]"
                 style={buttonShadow}
             >
@@ -113,7 +139,7 @@ export default function Home() {
                         adjustsFontSizeToFit
                         minimumFontScale={0.75}
                     >
-                        {formatRupiah(EXPENSES)} / {formatRupiah(BUDGET)}
+                        {formatRupiah(expenses)} / {formatRupiah(BUDGET)}
                     </Text>
                 </View>
 
@@ -147,27 +173,32 @@ export default function Home() {
                 </View>
 
                 <View className="gap-1">
-                    {TRANSACTIONS.map((t) => (
-                        <Pressable key={t.id}
-                            onPress={() => router.push(`/transactions/${t.id}` as Href)}
-                            className="flex-row items-center justify-between py-2.5 active:opacity-70">
-                                <View className="flex-row items-center gap-3.5">
-                                    <View className="w-10 h-10 rounded-xl bg-surface items-center justify-center">
-                                        <Ionicons name={t.icon} size={20} color="#4F5D45" />
-                                    </View>
-                                    <View>
-                                        <Text className="font-jakarta-medium text-body-md text-on-surface">
-                                        {t.category}
-                                        </Text>
-                                        <Text className="font-jakarta text-caption text-secondary">
-                                        {`${t.title} • ${t.when}`}
-                                        </Text>
-                                    </View>
-                                </View>
-                                <Text className="font-jakarta-semibold text-body-md text-on-surface">
-                                    {`- ${formatRupiah(t.amount)}`}
-                                </Text>
-                        </Pressable>
+                    {transactions.slice(0, 3).map((t) => (
+                    <Pressable
+                        key={t.id}
+                        onPress={() => router.push(`/transactions/${t.id}` as Href)}
+                        className="flex-row items-center justify-between py-2.5 active:opacity-70"
+                    >
+                        <View className="flex-1 flex-row items-center gap-3.5">
+                        <View className="w-10 h-10 rounded-xl bg-surface items-center justify-center">
+                            <Ionicons name={t.icon} size={20} color="#4F5D45" />
+                        </View>
+                        <View className="flex-1">
+                            <Text className="font-jakarta-medium text-body-md text-on-surface">
+                            {t.category}
+                            </Text>
+                            <Text
+                            numberOfLines={1}
+                            className="font-jakarta text-caption text-secondary"
+                            >
+                            {`${t.title} • ${t.when}`}
+                            </Text>
+                        </View>
+                        </View>
+                        <Text className="ml-3 font-jakarta-semibold text-body-md text-on-surface">
+                        {`- ${formatRupiah(t.amount)}`}
+                        </Text>
+                    </Pressable>
                     ))}
                 </View>
             </View>
@@ -178,7 +209,7 @@ export default function Home() {
                 </Text>
 
                 <View className="gap-4">
-                {CATEGORIES.map((c) => (
+                {categories.map((c) => (
                     <View key={c.id} className="gap-1.5">
                         <View className="flex-row items-center justify-between">
                             <View className="flex-row items-center gap-2">
