@@ -12,7 +12,7 @@ import {
   View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Svg, { Circle, Path } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -26,7 +26,6 @@ export default function App() {
   const [passwordError, setPasswordError] = useState(false);
   const [focused, setFocused] = useState<"email" | "password" | null>(null);
   const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
 
@@ -66,22 +65,6 @@ export default function App() {
           <View className="w-full max-w-[390px] self-center">
 
             <View className="flex-row items-center gap-2.5 pt-2">
-              <View className="w-8 h-8 rounded-lg bg-surface items-center justify-center">
-                <Svg
-                  width={20}
-                  height={20}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#38452F"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <Circle cx={12} cy={12} r={8} />
-                  <Path d="M9 12h6" />
-                  <Path d="M12 9v6" />
-                </Svg>
-              </View>
               <Text className="font-jakarta-semibold text-tittle-brand text-on-surface">
                 Moneo
               </Text>
@@ -133,6 +116,8 @@ export default function App() {
                 secureTextEntry={!showPassword}
                 autoCapitalize="none"
                 autoComplete="current-password"
+                returnKeyType="go"
+                onSubmitEditing={handleLogin}
                 className={`w-full h-[52px] pl-4 pr-12 rounded-xl bg-surface text-on-surface font-jakarta text-body-lg ${inputClass("password", passwordError)}`}
               />
               <Pressable
