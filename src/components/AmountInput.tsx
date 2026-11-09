@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type ComponentRef } from "react";
-import { Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import Animated, {
-    useAnimatedStyle,
-    useSharedValue,
-    withRepeat,
-    withTiming,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
 } from "react-native-reanimated";
 import { formatNumber } from "../utils/format";
 
@@ -37,29 +37,29 @@ export default function AmountInput({ value, onChange, error = false }: Props) {
       </Text>
 
       <View className="w-full">
-        {/* Tampilan angka */}
-        <View className="flex-row items-baseline justify-center gap-1.5 py-1">
-          <Text className="font-jakarta-medium text-headline-md text-secondary">
-            Rp
-          </Text>
-          <Text className="font-jakarta-semibold text-headline-lg text-on-surface">
-            {formatNumber(amount)}
-          </Text>
-          {focused && (
-            <Animated.View
-              style={[
-                {
-                  width: 2,
-                  height: 28,
-                  marginLeft: 2,
-                  alignSelf: "center",
-                  backgroundColor: "#4F5D45",
-                },
-                cursorStyle,
-              ]}
-            />
-          )}
-        </View>
+        <Pressable
+          onPress={() => inputRef.current?.focus()}
+          accessibilityRole="button"
+          accessibilityLabel="Edit amount"
+          className="w-full"
+        >
+          <View className="flex-row items-baseline justify-center gap-1.5 py-1">
+            <Text className="font-jakarta-medium text-headline-md text-secondary">
+              Rp
+            </Text>
+            <Text className="font-jakarta-semibold text-headline-lg text-on-surface">
+              {formatNumber(amount)}
+            </Text>
+            {focused && (
+              <Animated.View
+                style={[
+                  { width: 2, height: 28, marginLeft: 2, alignSelf: "center", backgroundColor: "#4F5D45" },
+                  cursorStyle,
+                ]}
+              />
+            )}
+          </View>
+        </Pressable>
 
         {/* Input asli: transparan, menutupi seluruh area angka */}
         <TextInput
@@ -67,6 +67,7 @@ export default function AmountInput({ value, onChange, error = false }: Props) {
           value={value}
           onChangeText={(t) => onChange(t.replace(/\D/g, "").slice(0, 10))}
           keyboardType="number-pad"
+          returnKeyType="done"
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           accessibilityLabel="Amount in Rupiah"

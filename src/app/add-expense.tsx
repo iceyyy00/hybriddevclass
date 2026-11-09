@@ -99,6 +99,7 @@ export default function AddExpense() {
       >
         <ScrollView
           keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
           contentContainerClassName="px-margin pb-8 gap-6"
         >
           <AmountInput
