@@ -42,6 +42,7 @@ module.exports = {
         "label-md": ["14px", { lineHeight: "20px" }],
         "label-sm": ["13px", { lineHeight: "18px" }],
         "headline-sm": ["20px", { lineHeight: "28px", letterSpacing: "-0.2px" }],
+        "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.36px" }],
         caption: ["12px", { lineHeight: "16px" }],
       },
     },
