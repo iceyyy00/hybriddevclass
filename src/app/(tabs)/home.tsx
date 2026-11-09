@@ -2,25 +2,15 @@ import RotatingGreeting from "@/components/RotatingGreeting";
 import { Ionicons } from "@react-native-vector-icons/ionicons";
 import { useRouter, type Href } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
+import { BUDGET, CATEGORIES, EXPENSES, INCOME, USER_NAME } from "../../data/summary";
 import { TRANSACTIONS } from "../../data/transactions";
 import { formatRupiah } from "../../utils/format";
 
-
-const USER_NAME = "John Doe";
-const INCOME = 12000000;
-const EXPENSES = 800000;
-const BUDGET = 4000000;
 
 const MONTHS = [
     "January","February","March","April","May","June",
     "July","August","September","October","November","December"
 ];
-
-const CATEGORIES = [
-    { id: "food", name: "Food", amount: 1250000, percent: 65, color: "#4F5D45" },
-    { id: "shopping", name: "Shopping", amount: 900000, percent: 45, color: "#8E9B85" },
-    { id: "transport", name: "Transport", amount: 650000, percent: 32, color: "#B2BDB0" },
-]
 
 
 const softShadow = {
