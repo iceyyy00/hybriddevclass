@@ -1,3 +1,4 @@
+import { TransactionsProvider } from "@/context/TransactionsContext";
 import {
   PlusJakartaSans_400Regular,
   PlusJakartaSans_500Medium,
@@ -27,9 +28,9 @@ export default function RootLayout() {
 
   if (!loaded && !error) return null;
   return(
-    <>
+    <TransactionsProvider>
       <StatusBar style="dark" />
-      <Stack screenOptions={{headerShown:false, contentStyle:{backgroundColor: '#F7F6F2'}}} />
-    </>
+      <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "#F7F6F2" } }} />
+    </TransactionsProvider>
   );
 }
