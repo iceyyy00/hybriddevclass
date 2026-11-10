@@ -119,13 +119,13 @@ Mahasiswa dan pekerja muda yang ingin mengatur keuangan harian dengan cara yang 
 
 Saya memilih warna hijau sebagai warna utama Moneo karena hijau identik dengan uang, jadi pengguna langsung merasa ini aplikasi keuangan. Supaya tidak terlalu mencolok, saya pakai hijau zaitun yang gelap dengan latar krem, sehingga tampilannya terasa hangat dan santai, bukan seperti aplikasi bank yang serius dan bikin tegang. Spasi antar elemen juga sengaja dibuat lega supaya layar tidak terasa sesak. Warna merah saya simpan khusus untuk tombol Delete, jadi begitu ada merah, pengguna langsung sadar itu aksi yang berbahaya.
 
-Di halaman utama, saldo ditaruh paling atas dengan ukuran paling besar karena itu hal pertama yang ingin diketahui pengguna. Income dan expenses ada tepat di bawahnya. Tombol Add expense dibuat lebar dan berwarna penuh karena ini aksi yang paling sering dipakai. Progress bar budget memberi gambaran cepat apakah pengeluaran bulan ini masih aman. Recent transactions hanya menampilkan tiga item dengan ikon kategori, dan sisanya bisa dilihat lewat View all, supaya layar tidak terlalu penuh.
+Di halaman utama, saldo ditaruh paling atas dengan ukuran paling besar karena itu hal pertama yang ingin diketahui pengguna. Income dan expenses ada tepat di bawahnya. Tombol Add expense dibuat lebar dan berwarna hijau yang mencolok daripada warna lain karena ini fitur yang paling sering dipakai. Progress bar budget memberi gambaran cepat apakah pengeluaran bulan ini masih aman atau tidak. Recent transactions hanya menampilkan tiga item dengan ikon kategori, dan sisanya bisa dilihat lewat View all, supaya layar tidak terlalu penuh.
 
 Di layar Add Expense, nominal ditampilkan besar di atas dan kategori dibuat berupa tombol yang bisa dipilih dengan satu ketukan. Tanggal dan metode pembayaran sudah punya nilai awal (Today dan Cash), jadi pengguna hanya perlu mengisi yang benar-benar penting dan pencatatan terasa cepat.
 
 Di layar Detail, semua informasi dikelompokkan dalam satu kartu dengan label di kiri dan nilai di kanan agar mudah dipindai. Tombol Edit dan Delete sengaja dipisah, dengan Delete di bawah dan berwarna merah, supaya tidak tertekan secara tidak sengaja.
 
-Layar Auth dibuat sederhana dengan spasi yang lega. Ikon mata pada kolom password membantu pengguna memeriksa ketikannya, dan petunjuk minimal 8 karakter ditampilkan langsung di bawah kolom password pada form Register.
+Layar Auth dibuat sederhana seperti login dan signup pada big company. Ikon mata pada kolom password membantu pengguna memeriksa ketikannya, dan petunjuk minimal 8 karakter ditampilkan langsung di bawah kolom password pada form Register. 
 
 ### Rencana Pengembangan
 
