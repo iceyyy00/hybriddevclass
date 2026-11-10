@@ -37,8 +37,8 @@ Finance
 Pastikan Node.js dan Expo Go (di HP) sudah terpasang.
 
 ```bash
-git clone ISI_URL_REPOSITORI
-cd ISI_NAMA_FOLDER
+git https://github.com/iceyyy00/hybriddevclass.git
+cd hybridapp
 npm install
 npx expo start
 ```
